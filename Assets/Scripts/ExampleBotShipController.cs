@@ -7,12 +7,12 @@ public class ExampleBotShipController : ShipController
 
     private Vector2 startPosition;
     private float angle = 0;
-    private float lastFireTime;
+    private float nextFireTime;
 
     protected override void Initialize()
     {
         startPosition = transform.position;
-        lastFireTime = Time.time;
+        nextFireTime = GenerateNextFireTime();
     }
 
     private void FixedUpdate()
@@ -21,26 +21,30 @@ public class ExampleBotShipController : ShipController
         Firing();
     }
 
-    // Example spinning ship
+    // Temp movement
     private void Movement()
     {
-        const float radius = 2;
-
-        float horizontal = Mathf.Sin(angle) * radius;
-        float vertical = Mathf.Cos(angle) * radius;
+        float horizontal = Mathf.Cos(angle);
+        float vertical = 0.0f;
         angle += Time.fixedDeltaTime;
 
         movementController.Move(horizontal, vertical);
     }
 
-    // Example firing
+    // Temp auto firing
     private void Firing()
     {
-        var lastFireTimeDelta = Time.time - lastFireTime;
-        if (lastFireTimeDelta > fireDelay)
+        if (Time.time > nextFireTime)
         {
             Fire();
-            lastFireTime = Time.time;
+            nextFireTime = GenerateNextFireTime();
         }
+    }
+
+    private float GenerateNextFireTime()
+    {
+        float min = Time.time + fireDelay;
+        float max = min + fireDelay;
+        return Random.Range(min, max);
     }
 }
