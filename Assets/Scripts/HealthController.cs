@@ -3,7 +3,19 @@ using System.Collections;
 
 public class HealthController : MonoBehaviour
 {
+    private CameraController cameraController;
     private int health = 100;
+
+    private void Start()
+    {
+        cameraController = FindObjectOfType<CameraController>();
+    }
+
+    private void DestroyWithShake()
+    {
+        cameraController.Shake();
+        Destroy(gameObject);
+    }
 
     public int Health
     {
@@ -15,7 +27,7 @@ public class HealthController : MonoBehaviour
         health -= amount;
         if (health <= 0)
         {
-            Destroy(gameObject);
+            DestroyWithShake();
         }
     }
 }
