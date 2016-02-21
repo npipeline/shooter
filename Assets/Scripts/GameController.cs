@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+    
+public class GameController : MonoBehaviour
+{
+    public Transform playerSpawn;
+    public GameObject playerShip;
 
-public class GameController : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	private void Start()
+    {
+        Instantiate(playerShip, playerSpawn.position, playerSpawn.rotation);
+    }
 }
