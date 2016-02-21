@@ -9,20 +9,20 @@ public class MovementController : MonoBehaviour
     public float screenWidth;
     public float screenHeight;
 
-    private new Rigidbody rigidbody;
+    private new Rigidbody2D rigidbody;
 
 	private void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rigidbody = GetComponent<Rigidbody2D>();
 	}
 
     public void Move(float horizontalAxis, float verticalAxis)
     {
         var movement =
-        Vector3.right * horizontalAxis * horizontalSpeed +
-        Vector3.up * verticalAxis * verticalSpeed;
-
-        Vector3 newPosition = transform.position + 
+        Vector2.right * horizontalAxis * horizontalSpeed +
+        Vector2.up * verticalAxis * verticalSpeed;
+        
+        Vector2 newPosition = rigidbody.position + 
             movement * Time.fixedDeltaTime;
         
         if (keepWithinBounds)

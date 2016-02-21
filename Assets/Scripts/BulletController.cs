@@ -6,12 +6,12 @@ public class BulletController : MonoBehaviour
     public float speed;
     public int damage;
 
-    private new Rigidbody rigidbody;
+    private new Rigidbody2D rigidbody;
     private float startTime;
 
     private void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rigidbody = GetComponent<Rigidbody2D>();
         startTime = Time.time;
     }
 
@@ -27,7 +27,7 @@ public class BulletController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.rigidbody.tag == "Ship")
         {
@@ -35,7 +35,6 @@ public class BulletController : MonoBehaviour
                 collision.gameObject.GetComponent<HealthController>();
             healthController.SubtractHealth(damage);
         }
-
         Destroy(gameObject);
     }
 }

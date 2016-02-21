@@ -5,7 +5,7 @@ public class ExampleBotShipController : ShipController
 {
     public float fireDelay;
 
-    private Vector3 startPosition;
+    private Vector2 startPosition;
     private float angle = 0;
     private float lastFireTime;
 
