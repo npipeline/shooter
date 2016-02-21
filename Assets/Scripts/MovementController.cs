@@ -10,17 +10,27 @@ public class MovementController : MonoBehaviour
     public float screenHeight;
 
     private new Rigidbody2D rigidbody;
+    private float horizontalSum = 0;
+    private float verticalSum = 0;
 
 	private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
 	}
 
-    public void Move(float horizontalAxis, float verticalAxis)
+    private void FixedUpdate()
+    {
+        MoveInternal();
+    }
+
+    private void MoveInternal()
     {
         var movement =
-        Vector2.right * horizontalAxis * horizontalSpeed +
-        Vector2.up * verticalAxis * verticalSpeed;
+        Vector2.right * horizontalSum * horizontalSpeed +
+        Vector2.up * verticalSum * verticalSpeed;
+
+        horizontalSum = 0;
+        verticalSum = 0;
         
         Vector2 newPosition = rigidbody.position + 
             movement * Time.fixedDeltaTime;
@@ -34,5 +44,12 @@ public class MovementController : MonoBehaviour
         }
 
         rigidbody.MovePosition(newPosition);
+    }
+
+    public void Move(float horizontalAxis, float verticalAxis)
+    {
+        // Holds onto all the inputs until FixedUpdate()
+        horizontalSum += horizontalAxis;
+        verticalSum += verticalAxis;
     }
 }
