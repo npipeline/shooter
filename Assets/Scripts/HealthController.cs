@@ -3,7 +3,36 @@ using System.Collections;
 
 public class HealthController : MonoBehaviour
 {
+    public ShrapnelController[] shrapnelPrefabs;
+
+    private Rigidbody2D rigidbody;
     private int health = 100;
+
+    private void Start()
+    {
+        rigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    private void InstantiateShrapnel()
+    {
+        foreach (var shrapnel in shrapnelPrefabs)
+        {
+            // Random position
+            const float maxOffset = 0.2f;
+            float offsetX = 
+                Random.Range(-maxOffset, maxOffset);
+            float offsetY =
+                Random.Range(-maxOffset, maxOffset);
+            Vector2 offset = new Vector2(offsetX, offsetY);
+            Vector2 position = (Vector2) transform.position + offset;
+            
+            // Random rotation
+            float angle = Random.Range(0.0f, 360.0f);
+            Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, angle);
+
+            Instantiate(shrapnel, position, rotation);
+        }
+    }
 
     public int Health
     {
@@ -15,6 +44,7 @@ public class HealthController : MonoBehaviour
         health -= amount;
         if (health <= 0)
         {
+            InstantiateShrapnel();
             Destroy(gameObject);
         }
     }

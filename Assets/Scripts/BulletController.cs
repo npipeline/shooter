@@ -12,14 +12,12 @@ public class BulletController : MonoBehaviour
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody.velocity = transform.up * speed;
         startTime = Time.time;
-    }
+    }   
 
     private void FixedUpdate()
     {
-        var movement = transform.up * speed * Time.fixedDeltaTime;
-        rigidbody.MovePosition(transform.position + movement);
-
         // TODO(jaween): Destroy when out of bounds
         if (Time.time - startTime > 1.0f)
         {
@@ -29,12 +27,32 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.rigidbody.tag == "Ship")
+        switch(collision.rigidbody.tag) 
         {
-            var healthController =
-                collision.gameObject.GetComponent<HealthController>();
-            healthController.SubtractHealth(damage);
+            case "Ship":
+                var healthController =
+                    collision.gameObject.GetComponent<HealthController>();
+                healthController.SubtractHealth(damage);
+                StartCoroutine(DestroyAfterDelay());
+                break;
+            case "Bullet":
+                Destroy(collision.gameObject);
+                Destroy(this);
+                break;
+            default:
+                break;
         }
+    }
+
+    // Gives the bullet a fraction of a second to smash into shrapnel
+    private IEnumerator DestroyAfterDelay()
+    {
+        // Hides the bullet
+        GetComponent<SpriteRenderer>().enabled = false;
+
+        // Destroys the bullet after a delay
+        const float delay = 0.05f;
+        yield return new WaitForSeconds(delay);
         Destroy(gameObject);
     }
 }
