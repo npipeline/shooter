@@ -4,9 +4,12 @@ using System.Collections;
 public class FakornController : ShipController
 {
     public float fireDelay;
+	public float verticalAlternatationDelay;
 
     private float angle = 0;
-    private float nextFireTime;
+	private float verticalAlternator = -1f;
+	private float nextFireTime;
+	private float nextAlternationTime;
 
     protected override void Initialize()
     {
@@ -22,8 +25,13 @@ public class FakornController : ShipController
     private void Movement()
     {
         float horizontal = Mathf.Cos(angle);
-        float vertical = 0.0f;
-        angle += Time.fixedDeltaTime;
+		float vertical = verticalAlternator;
+		if (Time.time > nextAlternationTime)
+		{
+			nextAlternationTime = GenerateVerticalAlterationTime();
+			verticalAlternator = verticalAlternator * -1;
+		}
+//        angle += Time.fixedDeltaTime;
 
         movementController.Move(horizontal, vertical);
     }
@@ -36,6 +44,12 @@ public class FakornController : ShipController
             nextFireTime = GenerateNextFireTime();
         }
     }
+	private float GenerateVerticalAlterationTime()
+	{
+		float min = Time.time + verticalAlternatationDelay;
+		float max = min + verticalAlternatationDelay;
+		return Random.Range(min, max);
+	}
 
     private float GenerateNextFireTime()
     {

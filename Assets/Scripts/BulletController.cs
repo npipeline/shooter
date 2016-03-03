@@ -25,9 +25,9 @@ public class BulletController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        switch(collision.rigidbody.tag) 
+        switch(collision.attachedRigidbody.tag) 
         {
             case "Ship":
                 var healthController =

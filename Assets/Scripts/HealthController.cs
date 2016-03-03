@@ -7,7 +7,7 @@ public class HealthController : MonoBehaviour
     public ShrapnelController[] shrapnelPrefabs;
 
     private Rigidbody2D rigidbody;
-    private int health = 100;
+    public int health = 5;
 
     private void Start()
     {
