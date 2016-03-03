@@ -5,13 +5,11 @@ public class FakornController : ShipController
 {
     public float fireDelay;
 
-    private Vector2 startPosition;
     private float angle = 0;
     private float nextFireTime;
 
     protected override void Initialize()
     {
-        startPosition = transform.position;
         nextFireTime = GenerateNextFireTime();
     }
 

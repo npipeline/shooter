@@ -26,8 +26,8 @@ public class MovementController : MonoBehaviour
     private void MoveInternal()
     {
         var movement =
-        Vector2.right * horizontalSum * horizontalSpeed +
-        Vector2.up * verticalSum * verticalSpeed;
+            Vector2.right * horizontalSum * horizontalSpeed +
+            Vector2.up * verticalSum * verticalSpeed;
 
         horizontalSum = 0;
         verticalSum = 0;
