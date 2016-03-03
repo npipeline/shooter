@@ -13,7 +13,9 @@ public class HealthController : MonoBehaviour
 
     private void DestroyWithShake()
     {
-        cameraController.Shake();
+        const float intensity = 0.3f;
+        const float duration = 0.3f;
+        cameraController.Shake(intensity, duration);
         Destroy(gameObject);
     }
 
