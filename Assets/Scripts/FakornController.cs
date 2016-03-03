@@ -1,17 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ExampleBotShipController : ShipController
+public class FakornController : ShipController
 {
     public float fireDelay;
 
-    private Vector2 startPosition;
     private float angle = 0;
     private float nextFireTime;
 
     protected override void Initialize()
     {
-        startPosition = transform.position;
         nextFireTime = GenerateNextFireTime();
     }
 
@@ -21,7 +19,6 @@ public class ExampleBotShipController : ShipController
         Firing();
     }
 
-    // Temp movement
     private void Movement()
     {
         float horizontal = Mathf.Cos(angle);
@@ -31,7 +28,6 @@ public class ExampleBotShipController : ShipController
         movementController.Move(horizontal, vertical);
     }
 
-    // Temp auto firing
     private void Firing()
     {
         if (Time.time > nextFireTime)
